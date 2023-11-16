@@ -11,18 +11,8 @@ services:
       - front_node_modules:/opt/app/front/node_modules
     ports:
       - "35000:3000"
-    command: bash -c "npm install && npm run dev"
+      - "35001:6006"
+    command: bash -c "npm install && (npm run dev & npm run storybook)"
     environment:
       - WATCHPACK_POLLING=true
     tty: true
-
-  storybook:
-    build: ./docker/front
-    volumes:
-      - ./front:/opt/app/front
-      - front_node_modules:/opt/app/front/node_modules
-    ports:
-      - "35001:6006"
-    command: npm run storybook
-    depends_on:
-      - front
